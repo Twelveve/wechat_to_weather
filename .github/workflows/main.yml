@@ -34,10 +34,10 @@ jobs:
         run: |
           sudo echo "appid="${{ secrets.appid }} > config.ini
           sudo echo "appsecret="${{ secrets.APPSECRET }} >> config.ini
-          sudo echo "key="${{ secrets.HEFENGKEY }} >> config.ini
-          sudo echo "city="${{ secrets.HEFENGCITY }} >> config.ini
+          sudo echo "key="${{ secrets.KEY }} >> config.ini
+          sudo echo "city="${{ secrets.CITY }} >> config.ini
           sudo echo "togetherdays="${{ secrets.TOGETHERDAYS }} >> config.ini
-          sudo echo "birthday1="${{ secrets.BIRTHDAY }} >> config.ini
+          sudo echo "birthday1="${{ secrets.BIRTHDAY1 }} >> config.ini
           sudo echo "birthday2="${{ secrets.BIRTHDAY2 }} >> config.ini
       - name: start post
         run: |
