@@ -26,21 +26,21 @@ class Duck
     {
         $this->appid = $config['appid'];
         $this->appsecret = $config['appsecret'];
-        $this->hefengkey = $config['hefengkey'];
+        $this->key = $config['key'];
         //$this->hefengcity = $config['hefengcity'];
         $this->togetherdays = $config['togetherdays'];
-        $this->birthday = $config['birthday'];
+        $this->birthday1 = $config['birthday1'];
 
 
         $params = [
-            'location' => $config['hefengcity'],//
-            'key' => $this->hefengkey
+            'location' => $config['city'],//
+            'key' => $this->key
         ];
         $url = 'https://geoapi.qweather.com/v2/city/lookup';
         $CityID = $this->getUrl($url, $params);
         //var_dump($CityID);
-        $this->hefengcity = $CityID['location'][0]['id'];
-        //var_dump($this->hefengcity);
+        $this->city = $CityID['location'][0]['id'];
+        //var_dump($this->city);
     }
 
     
@@ -110,8 +110,8 @@ class Duck
     public function getWeather ()
     {
         $params = [
-            'location' => $this->hefengcity,
-            'key' => $this->hefengkey
+            'location' => $this->city,
+            'key' => $this->key
         ];
         $url = 'https://devapi.qweather.com/v7/weather/now';
         $weather = $this->getUrl($url, $params);
@@ -122,8 +122,8 @@ class Duck
     {
         $params = [
             'type' => '3',//穿衣指数3 洗车指数2 运动指数1 ... 和风天气自查
-            'location' => $this->hefengcity,
-            'key' => $this->hefengkey
+            'location' => $this->city,
+            'key' => $this->key
         ];
         $url = 'https://devapi.qweather.com/v7/indices/1d';
         return $Indices = $this->getUrl($url, $params);
@@ -132,8 +132,8 @@ class Duck
     public function getCity ()
     {
         $params = [
-            'location' => $this->hefengcity,//
-            'key' => $this->hefengkey
+            'location' => $this->city,//
+            'key' => $this->key
         ];
         $url = 'https://geoapi.qweather.com/v2/city/lookup';
         return $City = $this->getUrl($url, $params)['location'][0]['name'];
@@ -209,7 +209,7 @@ class Duck
     {
         if ($birthday == NULL)
         {
-            $birthday = $this->birthday;
+            $birthday = $this->birthday1;
         }
         list($birthYear, $birthMonth, $birthDay) = explode('-', $birthday);
         //echo $birthDay;
