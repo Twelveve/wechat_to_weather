@@ -27,9 +27,11 @@ class Duck
         $this->appid = $config['appid'];
         $this->appsecret = $config['appsecret'];
         $this->key = $config['key'];
-        //$this->hefengcity = $config['hefengcity'];
+        $this->hefengcity = $config['hefengcity'];
         $this->togetherdays = $config['togetherdays'];
         $this->birthday1 = $config['birthday1'];
+        $this->touser = $config['touser'];
+        $this->template_id = $config['template_id'];
 
 
         $params = [
@@ -147,8 +149,10 @@ class Duck
     const URL_LIST = [
         'getAccessToken' => 'https://api.weixin.qq.com/cgi-bin/token',
         'getUserList'   => 'https://api.weixin.qq.com/cgi-bin/user/get',
-        'sendTemplateMessage' => 'https://api.weixin.qq.com/cgi-bin/message/template/send',
-        'getTemplateList' => 'https://api.weixin.qq.com/cgi-bin/template/get_all_private_template'
+        'getTemplateList' => 'https://api.weixin.qq.com/cgi-bin/template/get_all_private_template',
+        'sendTemplateMessage' => 'https://api.weixin.qq.com/cgi-bin/message/template/send'
+        'sendTemplateMessage2' => 'https://api.weixin.qq.com/cgi-bin/message/subscribe/bizsend'
+        
 ];
     public function getAccessToken()
     {
@@ -185,6 +189,24 @@ class Duck
     {
         //echo $this->getAccessToken();
         return $this->postUrl(self::URL_LIST['sendTemplateMessage'] . '?access_token=' . $this->getAccessToken(), $content);
+    }
+
+    // 根据公众号开发手册自行填写
+    public function sendTemplateMessage2($content)
+    {
+        // 获取access token
+        $accessToken = $this->getAccessToken();
+        // 构造完整的URL
+        $url = self::URL_LIST['sendTemplateMessage2'] . '?access_token=' . $accessToken;
+        // 构建请求数据
+        $content = [
+            'touser' => $userId,          // 用户ID
+            'template_id' => $templateId,  // 模板ID
+        ];
+        // 发送POST请求
+        return $this->postUrl($url, $content);
+        //echo $this->getAccessToken();
+        //return $this->postUrl(self::URL_LIST['sendTemplateMessage2'] . '?access_token=' . $this->getAccessToken(), $content);
     }
 
     /**
@@ -227,7 +249,7 @@ class Duck
     }
 
     /**
-     * 新冠疫情
+     * 新冠疫情 好古老
      */
     public function getFeiYan()
     {
