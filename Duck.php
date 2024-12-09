@@ -3,24 +3,17 @@ $timezone = date_default_timezone_get();           // 获取默认时区
 if ($timezone !== 'Asia/Shanghai') {
     date_default_timezone_set('Asia/Shanghai');    // 设置默认时区
 }
-/*
- * @Author: 贺和平
- * @Date: 2022-08-22 21:27:52
- * @Mail: 1297685880@qq.com
- * @LastEditTime: 2022-08-23 01:06:40
- * @FilePath: \\wechat-msg\\tools\\Duck.php
- */
 class Duck
 {
+
     var $hefengkey;
     var $hefengcity;
-
     var $appid;
     var $appsecret;
-
-
     var $togetherdays;
     var $birthday;
+    var $touser;
+    var $template_id;
     // 构造函数
     function __construct($config)
     {
@@ -30,9 +23,10 @@ class Duck
         $this->hefengcity = $config['hefengcity'];
         $this->togetherdays = $config['togetherdays'];
         $this->birthday1 = $config['birthday1'];
+        //新增 接受用户ID
         $this->touser = $config['touser'];
+        //新增 发送信息模板
         $this->template_id = $config['template_id'];
-
 
         $params = [
             'location' => $config['city'],//
@@ -45,7 +39,7 @@ class Duck
         //var_dump($this->city);
     }
 
-    
+    // 获取url
     public static function getUrl ($url, $data=[])
     {
         if($data == !NULL) {
@@ -74,6 +68,7 @@ class Duck
 
     }
 
+    // 发送post请求
     public static function postUrl ($url, $data)
     {
         //$data  = json_encode($data);    

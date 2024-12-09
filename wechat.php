@@ -3,13 +3,6 @@ $timezone = date_default_timezone_get();           // 获取默认时区
 if ($timezone !== 'Asia/Shanghai') {
     date_default_timezone_set('Asia/Shanghai');    // 设置默认时区
 }
-/*
- * @Author: 贺和平
- * @Date: 2022-08-22 20:58:39
- * @Mail: 1297685880@qq.com
- * @LastEditTime: 2022-08-23 19:02:21
- * @FilePath: \\undefinedc:\\Users\\ai014\\Desktop\\wechat-msg\\wechat.php
- */
 echo @$_GET['echostr'];
 require_once 'Duck.php';
 
@@ -22,8 +15,9 @@ $start = new Duck($config);
 $weekarray=array("日","一","二","三","四","五","六");
 $data = [
     'touser' => '',
-    // 指定模板
-    'template_id' => $start->getTemplateList()['template_list'][0]['template_id'],//默认只给第一个模板发消息
+    // 指定模板 发送消息1时需要
+    // 'template_id' => $start->getTemplateList()['template_list'][0]['template_id'],//默认只给第一个模板发消息
+    // 点击模板消息跳转链接
     'url' => 'http://www.weather.com.cn/weather1d/101180110.shtml#input',
     'topcolor' => '#fdb3b0',
     'data' => [
@@ -80,7 +74,10 @@ $data = [
 foreach ($start->getUserList()['data']['openid'] as $user)
 {
     $data['touser'] = $user;
+    // 发送消息1
     $start->sendTemplateMessage(json_encode($data));
+    // 发送消息2
+    $start->sendTemplateMessage2(json_encode($data));
 }
 
 
