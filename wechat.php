@@ -54,8 +54,8 @@ $data = [
     // 指定模板 发送消息1时需要
     // 'template_id' => $start->getTemplateList()['template_list'][0]['template_id'],//默认只给第一个模板发消息
     // 点击模板消息跳转链接
-    //'touser' => 'oTlR66tPgN-Kc8QR1GPRPRQTRjEE',
-    'touser' => '',     // 接收者为空 默认所有人对发送？
+    'touser' => 'oTlR66tPgN-Kc8QR1GPRPRQTRjEE',  //twelveee
+    'touser' => 'oTlR66qPQgHvIuBLRON6B6HkJzI0',  //struggle
     'template_id' => '3JBSXl3OH0H5K0vQ8OqgIKenW6CVMizkOlH1d2OHKUI',
     'url' => 'http://www.weather.com.cn/weather1d/101180110.shtml#input',
     'topcolor' => '#fdb3b0',
