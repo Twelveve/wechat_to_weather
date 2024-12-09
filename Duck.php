@@ -152,7 +152,7 @@ class Duck
         // 获取模板列表
         'getTemplateList' => 'https://api.weixin.qq.com/cgi-bin/template/get_all_private_template',
         // 全部发送？
-        'sendTemplateMessage' => 'https://api.weixin.qq.com/cgi-bin/message/template/send'
+        'sendTemplateMessage' => 'https://api.weixin.qq.com/cgi-bin/message/template/send',
         // 单独发送 可指定用户
         'sendTemplateMessage2' => 'https://api.weixin.qq.com/cgi-bin/message/subscribe/bizsend'
         
