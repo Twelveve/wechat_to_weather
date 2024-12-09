@@ -21,7 +21,7 @@ class Duck
 
     var $togetherdays;
     var $birthday;
-
+    // 构造函数
     function __construct($config)
     {
         $this->appid = $config['appid'];
@@ -109,6 +109,7 @@ class Duck
     /**
      * 和风天气
      */
+    // 获取实时天气
     public function getWeather ()
     {
         $params = [
@@ -120,6 +121,7 @@ class Duck
         return $weather;
     }
 
+    // 获取生活指数
     public function getIndices ()
     {
         $params = [
@@ -131,6 +133,7 @@ class Duck
         return $Indices = $this->getUrl($url, $params);
     }
 
+    // 获取城市名称-经纬度
     public function getCity ()
     {
         $params = [
@@ -147,10 +150,15 @@ class Duck
      * 微信
      */
     const URL_LIST = [
+        // 获取access token
         'getAccessToken' => 'https://api.weixin.qq.com/cgi-bin/token',
+        // 获取用户列表
         'getUserList'   => 'https://api.weixin.qq.com/cgi-bin/user/get',
+        // 获取模板列表
         'getTemplateList' => 'https://api.weixin.qq.com/cgi-bin/template/get_all_private_template',
+        // 全部发送？
         'sendTemplateMessage' => 'https://api.weixin.qq.com/cgi-bin/message/template/send'
+        // 单独发送 可指定用户
         'sendTemplateMessage2' => 'https://api.weixin.qq.com/cgi-bin/message/subscribe/bizsend'
         
 ];
@@ -247,35 +255,6 @@ class Duck
         $days = floor(($diff)/ (60*60*24));
         return $days;
     }
-
-    /**
-     * 新冠疫情 好古老
-     */
-    public function getFeiYan()
-    {
-        $data = $this->getUrl('https://cdn.mdeer.com/data/yqstaticdata.js');
-        $data = ltrim($data,'callbackstaticdata(');
-        $data = rtrim($data,')');
-        $data = json_decode($data,true);
-
-        foreach ($data['cityLists'] as $city)
-        {
-            if($city['city'] == "成都")
-            {
-                $feiYan = [
-                    "新增确诊" => $city['lastLocalSureNew'],
-                    "新增无症状" => $city['lastIncrHideNew'],
-                    "现有确诊" => $city['currentConfirm']
-                ];
-                return $feiYan;
-            }
-
-        }
-
-
-    }
-
-    
 }
 
 
