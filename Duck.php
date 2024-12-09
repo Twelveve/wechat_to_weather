@@ -5,7 +5,6 @@ if ($timezone !== 'Asia/Shanghai') {
 }
 class Duck
 {
-
     var $hefengkey;
     var $hefengcity;
     var $appid;
@@ -22,7 +21,7 @@ class Duck
         $this->key = $config['hefengkey'];
         $this->hefengcity = $config['hefengcity'];
         $this->togetherdays = $config['togetherdays'];
-        $this->birthday1 = $config['birthday'];
+        $this->birthday1 = $config['birthday1'];
         $this->birthday2 = $config['birthday2'];
         //新增 接受用户ID
         $this->touser = $config['touser'];
@@ -138,9 +137,6 @@ class Duck
         $url = 'https://geoapi.qweather.com/v2/city/lookup';
         return $City = $this->getUrl($url, $params)['location'][0]['name'];
     }
-
-
-
     /**
      * 微信
      */
@@ -213,7 +209,7 @@ class Duck
     }
 
     /**
-     *
+     * 获取在一起天数
      */
     public function getTogetherDays()
     {
@@ -227,14 +223,17 @@ class Duck
         $hours = floor(($diff - $days*60*60*24)  / (60*60));
         $minutes = floor(($diff - $days*60*60*24  - $hours*60*60)/ 60);
         $seconds = floor(($diff - $days*60*60*24  - $hours*60*60 - $minutes*60));
-        return $days.'天'.$hours.'小时'.$minutes.'分钟'.$seconds.'秒';
+        //只返回天数
+        return $days;
+        //返回天数 小时 分钟 秒
+        //return $days.'天'.$hours.'小时'.$minutes.'分钟'.$seconds.'秒';
     }
 
     public function getBirthday($birthday ='')
     {
         if ($birthday == NULL)
         {
-            $birthday = $this->birthday1;
+            $birthday = $this->birthday;
         }
         list($birthYear, $birthMonth, $birthDay) = explode('-', $birthday);
         //echo $birthDay;
@@ -251,9 +250,4 @@ class Duck
         return $days;
     }
 }
-
-
-
-
-
 ?>

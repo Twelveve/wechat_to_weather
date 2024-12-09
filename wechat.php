@@ -54,8 +54,9 @@ $data = [
     // 指定模板 发送消息1时需要
     // 'template_id' => $start->getTemplateList()['template_list'][0]['template_id'],//默认只给第一个模板发消息
     // 点击模板消息跳转链接
-    'touser' => 'oTlR66tPgN-Kc8QR1GPRPRQTRjEE',
-    'template_id' => 'BxFhp0fBJkhP18TqwgmJj2gjEjbDWYKprli1cU8A24U',
+    //'touser' => 'oTlR66tPgN-Kc8QR1GPRPRQTRjEE',
+    'touser' => '',     // 接收者为空 默认所有人对发送？
+    'template_id' => '3JBSXl3OH0H5K0vQ8OqgIKenW6CVMizkOlH1d2OHKUI',
     'url' => 'http://www.weather.com.cn/weather1d/101180110.shtml#input',
     'topcolor' => '#fdb3b0',
     'data' => [
@@ -83,16 +84,17 @@ $data = [
             'value' => $start->getWeather()['now']['humidity'].'%',
             'color' => '#949bd6'
         ],
-        'indices' => [//指数
-            'value' => $start->getIndices()['daily'][0]['text'],
-            'color' => '#40d6bf'
-        ],
+        // 穿衣指数不好显示 故删除
+        // 'indices' => [//指数
+        //     'value' => $start->getIndices()['daily'][0]['text'],
+        //     'color' => '#40d6bf'
+        // ],
         'qinghua' => [//情话
             'value' => $start->getQingHua(),
             'color' => '#eb5f76'
         ],
         'birthday1' => [//生日
-            'value' => $start->getBirthday(),
+            'value' => $start->getBirthday($config['birthday1']),
             'color' => '#fdb3b0'
         ],
         'birthday2' => [//第二个人的生日
