@@ -14,10 +14,13 @@ $start = new Duck($config);
 
 $weekarray=array("日","一","二","三","四","五","六");
 $data = [
-    'touser' => '',
+    # 指定接收者
+    //'touser' => '',
     // 指定模板 发送消息1时需要
     // 'template_id' => $start->getTemplateList()['template_list'][0]['template_id'],//默认只给第一个模板发消息
     // 点击模板消息跳转链接
+    'touser' => 'oTlR66tPgN-Kc8QR1GPRPRQTRjEE',
+    'template_id' => 'BxFhp0fBJkhP18TqwgmJj2gjEjbDWYKprli1cU8A24U',
     'url' => 'http://www.weather.com.cn/weather1d/101180110.shtml#input',
     'topcolor' => '#fdb3b0',
     'data' => [
@@ -77,7 +80,7 @@ foreach ($start->getUserList()['data']['openid'] as $user)
     // 发送消息1
     $start->sendTemplateMessage(json_encode($data));
     // 发送消息2
-    $start->sendTemplateMessage2(json_encode($data));
+    //$start->sendTemplateMessage2(json_encode($data));
 }
 
 
