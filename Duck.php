@@ -19,17 +19,17 @@ class Duck
     {
         $this->appid = $config['appid'];
         $this->appsecret = $config['appsecret'];
-        $this->key = $config['key'];
+        $this->key = $config['hefengkey'];
         $this->hefengcity = $config['hefengcity'];
         $this->togetherdays = $config['togetherdays'];
-        $this->birthday1 = $config['birthday1'];
+        $this->birthday1 = $config['birthday'];
+        $this->birthday2 = $config['birthday2'];
         //新增 接受用户ID
         $this->touser = $config['touser'];
         //新增 发送信息模板
         $this->template_id = $config['template_id'];
-
         $params = [
-            'location' => $config['city'],//
+            'location' => $config['hefengcity'],//
             'key' => $this->key
         ];
         $url = 'https://geoapi.qweather.com/v2/city/lookup';

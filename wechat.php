@@ -6,11 +6,46 @@ if ($timezone !== 'Asia/Shanghai') {
 echo @$_GET['echostr'];
 require_once 'Duck.php';
 
+// 
 $ConfigPath = __DIR__.'/config.ini';
+// 获取配置文件
 $config = getConfig($ConfigPath);
 
-// 实例化Duck类 
+// 实例化Duck类 首先执行构造函数
 $start = new Duck($config);
+function getConfig($path)
+{
+    $configdata = []; // 初始化配置数据数组
+    $file = fopen($path, "r"); // 打开文件
+    // 检查文件是否成功打开
+    if (!$file) {
+        return []; // 如果打开失败，返回空数组
+    }
+    // 读取配置文件 一行一行读取
+    while (!feof($file)) {
+        // 获取一行
+        $data = fgets($file);
+
+        // 如果读取的数据为空 或者 该行是注释，则跳过
+        if ($data === false || trim($data) === '' || strpos($data, '#') === 0) {
+            continue;
+        }
+
+        // 去除$data字符串两端的空白符
+        $data = trim($data);
+        
+        // 使用explode分割并检查分割结果
+        $datalist = explode('=', $data);
+        if (count($datalist) === 2) {
+            $key = trim($datalist[0]);
+            $value = trim($datalist[1]);
+            $configdata[$key] = $value; // 存储键值对
+        }
+    }
+    
+    fclose($file); // 关闭文件
+    return $configdata; // 返回配置数据
+}
 
 $weekarray=array("日","一","二","三","四","五","六");
 $data = [
@@ -76,31 +111,11 @@ $data = [
  */
 foreach ($start->getUserList()['data']['openid'] as $user)
 {
-    $data['touser'] = $user;
+    // 接收者已在 Data中设置
+    // $data['touser'] = $user;
     // 发送消息1
     $start->sendTemplateMessage(json_encode($data));
     // 发送消息2
     //$start->sendTemplateMessage2(json_encode($data));
-}
-
-
-
-
-function getConfig($path)
-{
-    $file = fopen($path,"r");
-    while(!feof($file))
-    {
-        $data =  fgets($file);
-        $data = trim($data);
-        //$data = preg_replace('# #','',$data);
-        //parse_str($configdata,$arrconfig);
-        $datalist = explode('=',$data);
-        $datalist[0] = trim($datalist[0]);
-        $datalist[1] = trim($datalist[1]);
-
-        $configdata[$datalist[0]] =$datalist[1];
-    }
-    return $configdata;
 }
  ?>
