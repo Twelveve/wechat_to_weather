@@ -10,6 +10,8 @@ require_once 'Duck.php';
 $ConfigPath = __DIR__.'/config.ini';
 // 获取配置文件
 $config = getConfig($ConfigPath);
+// 打印所有配置
+print_r($config);
 
 // 实例化Duck类 首先执行构造函数
 $start = new Duck($config);
@@ -30,10 +32,8 @@ function getConfig($path)
         if ($data === false || trim($data) === '' || strpos($data, '#') === 0) {
             continue;
         }
-
         // 去除$data字符串两端的空白符
         $data = trim($data);
-        
         // 使用explode分割并检查分割结果
         $datalist = explode('=', $data);
         if (count($datalist) === 2) {
@@ -42,7 +42,6 @@ function getConfig($path)
             $configdata[$key] = $value; // 存储键值对
         }
     }
-    
     fclose($file); // 关闭文件
     return $configdata; // 返回配置数据
 }
@@ -55,7 +54,7 @@ $data = [
     // 'template_id' => $start->getTemplateList()['template_list'][0]['template_id'],//默认只给第一个模板发消息
     // 点击模板消息跳转链接
     'touser' => 'oTlR66tPgN-Kc8QR1GPRPRQTRjEE',  //twelveee
-    'touser' => 'oTlR66qPQgHvIuBLRON6B6HkJzI0',  //struggle
+    //'touser' => 'oTlR66qPQgHvIuBLRON6B6HkJzI0',  //struggle
     'template_id' => '3JBSXl3OH0H5K0vQ8OqgIKenW6CVMizkOlH1d2OHKUI',
     'url' => 'http://www.weather.com.cn/weather1d/101180110.shtml#input',
     'topcolor' => '#fdb3b0',
@@ -102,6 +101,7 @@ $data = [
             'color' => '#a594de'
         ],
         'togetherdays' => [//在一起多久了
+            //获取在一起时间
             'value' => $start->getTogetherDays(),
             'color' => '#8218e7'
         ]
