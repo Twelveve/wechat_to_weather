@@ -5,13 +5,17 @@ if ($timezone !== 'Asia/Shanghai') {
 }
 class Duck
 {
-    var $hefengkey;
-    var $hefengcity;
+    var $key;
+    var $hefengcity;  //深圳
+    var $hefengcity2; //余杭
     var $appid;
     var $appsecret;
     var $togetherdays;
-    var $birthday;
+    var $birthday1; //宝子
+    var $birthday2; //傻狗
+    var $birthday3; //在一起纪念日
     var $touser;
+    var $touser2;
     var $template_id;
     // 构造函数
     function __construct($config)
@@ -20,15 +24,18 @@ class Duck
         $this->appsecret = $config['appsecret'];
         $this->key = $config['hefengkey'];
         $this->hefengcity = $config['hefengcity'];
+        $this->hefengcity2 = $config['hefengcity2'];
         $this->togetherdays = $config['togetherdays'];
         $this->birthday1 = $config['birthday1'];
         $this->birthday2 = $config['birthday2'];
+        $this->birthday3= $config['birthday3'];
         //新增 接受用户ID
         $this->touser = $config['touser'];
+        $this->touser2 = $config['touser2'];
         //新增 发送信息模板
         $this->template_id = $config['template_id'];
         $params = [
-            'location' => $config['hefengcity'],//
+            'location' => $config['city'],//
             'key' => $this->key
         ];
         $url = 'https://geoapi.qweather.com/v2/city/lookup';
@@ -107,7 +114,7 @@ class Duck
     public function getWeather ()
     {
         $params = [
-            'location' => $this->city,
+            'location' => $this->hefengcity,
             'key' => $this->key
         ];
         $url = 'https://devapi.qweather.com/v7/weather/now';
@@ -131,7 +138,17 @@ class Duck
     public function getCity ()
     {
         $params = [
-            'location' => $this->city,//
+            'location' => $this->hefengcity,//
+            'key' => $this->key
+        ];
+        $url = 'https://geoapi.qweather.com/v2/city/lookup';
+        return $City = $this->getUrl($url, $params)['location'][0]['name'];
+    }
+    //
+    public function getCity2 ()
+    {
+        $params = [
+            'location' => $this->hefengcity2,//
             'key' => $this->key
         ];
         $url = 'https://geoapi.qweather.com/v2/city/lookup';
@@ -189,25 +206,6 @@ class Duck
         //echo $this->getAccessToken();
         return $this->postUrl(self::URL_LIST['sendTemplateMessage'] . '?access_token=' . $this->getAccessToken(), $content);
     }
-
-    // 根据公众号开发手册自行填写
-    public function sendTemplateMessage2($content)
-    {
-        // 获取access token
-        $accessToken = $this->getAccessToken();
-        // 构造完整的URL
-        $url = self::URL_LIST['sendTemplateMessage2'] . '?access_token=' . $accessToken;
-        // 构建请求数据
-        $content = [
-            'touser' => $userId,          // 用户ID
-            'template_id' => $templateId,  // 模板ID
-        ];
-        // 发送POST请求
-        return $this->postUrl($url, $content);
-        //echo $this->getAccessToken();
-        //return $this->postUrl(self::URL_LIST['sendTemplateMessage2'] . '?access_token=' . $this->getAccessToken(), $content);
-    }
-
     /**
      * 获取在一起天数
      */
@@ -233,7 +231,7 @@ class Duck
     {
         if ($birthday == NULL)
         {
-            $birthday = $this->birthday;
+            $birthday = $this->birthday1;
         }
         list($birthYear, $birthMonth, $birthDay) = explode('-', $birthday);
         //echo $birthDay;

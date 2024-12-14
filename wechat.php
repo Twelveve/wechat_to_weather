@@ -8,10 +8,10 @@ require_once 'Duck.php';
 
 // 
 $ConfigPath = __DIR__.'/config.ini';
-// 获取配置文件
+// 获取配置文件ConfigPath
 $config = getConfig($ConfigPath);
 
-// 实例化Duck类 首先执行构造函数
+// 实例化Duck类 首先执行构造函数 即function __construct($config)
 $start = new Duck($config);
 function getConfig($path)
 {
@@ -48,66 +48,96 @@ function getConfig($path)
 }
 
 $weekarray=array("日","一","二","三","四","五","六");
+// to Twelveee
 $data = [
     # 指定接收者
     //'touser' => '',
     // 指定模板 发送消息1时需要
     // 'template_id' => $start->getTemplateList()['template_list'][0]['template_id'],//默认只给第一个模板发消息
     // 点击模板消息跳转链接
-    'touser' => 'oTlR66tPgN-Kc8QR1GPRPRQTRjEE',  //twelveee
-    'touser' => 'oTlR66qPQgHvIuBLRON6B6HkJzI0',  //struggle
-    'template_id' => '3JBSXl3OH0H5K0vQ8OqgIKenW6CVMizkOlH1d2OHKUI',
-    'url' => 'http://www.weather.com.cn/weather1d/101180110.shtml#input',
-    'topcolor' => '#fdb3b0',
+    'touser' => 'oTlR66tPgN-Kc8QR1GPRPRQTRjEE',  // twelveee
+    'template_id' => 'XviqvrDJD93KqqpS-ThbzLycOnQMu2VSWptHmHi1kj8',  // 宝宝安安_模板
+    'url' => 'http://www.weather.com.cn/weather1d/101180110.shtml#input',   //
     'data' => [
         'date' => [
             'value' => date('Y年n月j日 H时i分s秒'),
-            'color' => '#5ecf3b'
         ],
         'week' => [
             'value' => $weekarray[date("w")],
-            'color' => '#5ecf3b'
         ],
         'city' => [//城市
             'value' => $start->getCity(),
-            'color' => '#fda76f'
         ],
         'weather' => [ //天气现象
             'value' => $start->getWeather()['now']['text'],
-            'color' => '#6ee5f6'
         ],
         'temp' => [ //温度
             'value' => $start->getWeather()['now']['temp'],
-            'color' => '#5ecf3b'
         ],
         'humidity' => [//相对湿度
             'value' => $start->getWeather()['now']['humidity'].'%',
-            'color' => '#949bd6'
         ],
-        // 穿衣指数不好显示 故删除
-        // 'indices' => [//指数
-        //     'value' => $start->getIndices()['daily'][0]['text'],
-        //     'color' => '#40d6bf'
-        // ],
         'qinghua' => [//情话
             'value' => $start->getQingHua(),
-            'color' => '#eb5f76'
         ],
         'birthday1' => [//生日
             'value' => $start->getBirthday($config['birthday1']),
-            'color' => '#fdb3b0'
         ],
         'birthday2' => [//第二个人的生日
             'value' => $start->getBirthday($config['birthday2']),
-            'color' => '#a594de'
+        ],
+        'birthday3' => [//纪念日
+            'value' => $start->getBirthday($config['birthday3']),
         ],
         'togetherdays' => [//在一起多久了
             'value' => $start->getTogetherDays(),
-            'color' => '#8218e7'
         ]
     ],
 ];
-
+// TO struggle
+$data1 = [
+    'touser' => 'oTlR66qPQgHvIuBLRON6B6HkJzI0',  //struggle
+    'template_id' => 'XviqvrDJD93KqqpS-ThbzLycOnQMu2VSWptHmHi1kj8',
+    'url' => 'http://www.weather.com.cn/weather1d/101180110.shtml#input',
+    'data' => [
+        'date' => [
+            'value' => date('Y年n月j日 H时i分s秒'),
+        ],
+        'week' => [
+            'value' => $weekarray[date("w")],
+        ],
+        'city' => [// 深圳
+            'value' => $start->getCity(),
+        ],
+        'city2' => [// 余杭
+            'value' => $start->getCity2(),
+        ],
+        'weather' => [ //天气现象
+            'value' => $start->getWeather()['now']['text'],
+        ],
+        'temp' => [ //温度
+            'value' => $start->getWeather()['now']['temp'],
+        ],
+        'humidity' => [//相对湿度
+            'value' => $start->getWeather()['now']['humidity'].'%',
+        ],
+        'qinghua' => [//情话
+            'value' => $start->getQingHua(),
+        ],
+        'birthday1' => [//宝子
+            'value' => $start->getBirthday($config['birthday1']),
+        ],
+        'birthday2' => [//傻狗
+            'value' => $start->getBirthday($config['birthday2']),
+        ],
+        'birthday3' => [//在一起纪念日
+            'value' => $start->getBirthday($config['birthday3']),
+        ],
+        'togetherdays' => [//在一起多久了
+            'value' => $start->getTogetherDays(),
+        ]
+    ],
+];
 /**
  * 启动点
  */
@@ -115,9 +145,10 @@ foreach ($start->getUserList()['data']['openid'] as $user)
 {
     // 接收者已在 Data中设置
     // $data['touser'] = $user;
-    // 发送消息1
+    // Send Massage to Twelveee
     $start->sendTemplateMessage(json_encode($data));
-    // 发送消息2
-    //$start->sendTemplateMessage2(json_encode($data));
+    // Send Massage to Struggle
+    $start->sendTemplateMessage(json_encode($data1));
+    //$start->sendTemplateMessage(json_encode($data1));
 }
  ?>
